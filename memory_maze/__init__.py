@@ -14,14 +14,29 @@ try:
     from functools import partial as f
 
     import dm_env
-    import gym
-    from gym.envs.registration import register
+    try:
+        import gym
+        from gym.envs.registration import register
 
-    from .gym_wrappers import GymWrapper
+        from .gym_wrappers import GymWrapper
 
-    def _make_gym_env(dm_task: Callable[[], dm_env.Environment], **kwargs):
-        dmenv = dm_task(**kwargs)
-        return GymWrapper(dmenv)
+        def _make_gym_env(dm_task: Callable[[], dm_env.Environment], **kwargs):
+            dmenv = dm_task(**kwargs)
+            return GymWrapper(dmenv)
+    except:
+        try:
+            import gymnasium as gym
+            from gymnasium import register
+
+            from .gymnasium_wrappers import GymWrapper
+
+            def _make_gym_env(dm_task: Callable[[], dm_env.Environment], **kwargs):
+                dmenv = dm_task(**kwargs)
+                return GymWrapper(dmenv)
+        except Exception as e:
+            breakpoint()
+            print('error:', e)
+            #raise ImportError('Neither gym nor gymnasium is available.')
 
     sizes = {
         '9x9': tasks.memory_maze_9x9,
