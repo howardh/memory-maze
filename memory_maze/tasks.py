@@ -11,6 +11,20 @@ from memory_maze.wrappers import *
 DEFAULT_CONTROL_FREQ = 4.0
 
 
+def memory_maze_5x5(**kwargs):
+    """
+    Maze based on DMLab30-explore_goal_locations_small
+    {
+        mazeHeight = 11,  # with outer walls
+        mazeWidth = 11,
+        roomCount = 4,
+        roomMaxSize = 5,
+        roomMinSize = 3,
+    }
+    """
+    return _memory_maze(5, 2, 100, max_rooms=3, room_min_size=2, room_max_size=3, **kwargs)
+
+
 def memory_maze_9x9(**kwargs):
     """
     Maze based on DMLab30-explore_goal_locations_small
